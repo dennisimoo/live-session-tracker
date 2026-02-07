@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Sessions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb.min.css">
+  <style>
+    @font-face {
+      font-family: 'Geist Pixel';
+      src: url('https://cdn.jsdelivr.net/npm/geist@1.5.1/dist/fonts/geist-pixel/GeistPixelSquare-Regular.woff2') format('woff2');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Geist Pixel', -apple-system, monospace;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      image-rendering: pixelated;
+    }
+
+    .header {
+      height: 48px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: #000;
+    }
+
+    .title {
+      font-size: 16px;
+      letter-spacing: 3px;
+    }
+
+    .count {
+      font-size: 14px;
+      color: #666;
+      letter-spacing: 2px;
+    }
+
+    .main {
+      height: calc(100vh - 48px);
+    }
+
+    .sessions-bar {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      overflow-y: auto;
+      background: #0a0a0a;
+      height: calc(100vh - 48px);
+      align-content: start;
+    }
+
+    .session-card {
+      width: 100%;
+      height: 200px;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-card:hover {
+      border-color: #0070f3;
+      transform: translateY(-2px);
+    }
+
+    .session-card.expanded {
+      grid-column: 1 / -1;
+      height: calc(100vh - 48px - 48px);
+      max-height: calc(100vh - 48px - 48px);
+      transform: translateY(0);
+    }
+
+    .session-card.expanded:hover {
+      transform: translateY(0);
+    }
+
+    .session-preview {
+      height: 160px;
+      background: #000;
+      border-bottom: 1px solid #222;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .session-card.expanded .session-preview {
+      height: calc(100% - 40px);
+      border-bottom: 1px solid #222;
+    }
+
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+
+    .session-info {
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .session-id {
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .session-status {
+      font-size: 9px;
+      color: #666;
+    }
+
+    .live-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 6px;
+      height: 6px;
+      background: #0070f3;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #0070f3;
+      z-index: 10;
+    }
+
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      grid-column: 1 / -1;
+      color: #666;
+      gap: 16px;
+      padding: 80px 20px;
+    }
+
+    .empty-title {
+      font-size: 18px;
+      letter-spacing: 3px;
+      color: #999;
+    }
+
+    .empty-subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .code {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-top: 16px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #222;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+
+    /* Smooth scroll behavior */
+    .sessions-bar {
+      scroll-behavior: smooth;
+    }
+
+    /* Hide mouse cursor in replays */
+    .replayer-mouse,
+    .replayer-mouse-tail,
+    .replayer-mouse-tail > *,
+    [class*="replayer-mouse"],
+    [class*="mouse-tail"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* Ensure replayer content fills container properly */
+    .replayer-wrapper {
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .replayer-wrapper > iframe {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">LIVE SESSIONS</div>
+    <div class="count" id="count">0 ACTIVE</div>
+  </div>
+
+  <div class="main">
+    <div class="sessions-bar" id="sessions-bar">
+      <div class="empty">
+        <div class="empty-title">WAITING</div>
+        <div class="empty-subtitle">OPEN DEMO SITE TO START</div>
+        <div class="code">&lt;script src="http://localhost:3001/src/tracker.js"&gt;&lt;/script&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb-all.min.js"></script>
+  <script>
+    const socket = io('http://localhost:3001');
+    const sessions = new Map();
+    let currentReplayer = null;
+    let currentSession = null;
+
+    socket.on('connect', () => {
+      socket.emit('watch-sessions');
+    });
+
+    socket.on('live-event', (data) => {
+      const { sessionId, event } = data;
+
+      if (!sessions.has(sessionId)) {
+        addSession(sessionId);
+      }
+
+      const sessionData = sessions.get(sessionId);
+      sessionData.events.push(event);
+      sessionData.lastActivity = Date.now();
+
+      // Update preview replayer
+      if (sessionData.replayer) {
+        sessionData.replayer.addEvent(event);
+      }
+
+      updateCount();
+    });
+
+    function addSession(sessionId) {
+      const shortId = sessionId.replace('session_', '').substring(0, 8).toUpperCase();
+
+      sessions.set(sessionId, {
+        id: sessionId,
+        shortId: shortId,
+        events: [],
+        startTime: Date.now(),
+        lastActivity: Date.now(),
+        replayer: null
+      });
+
+      const bar = document.getElementById('sessions-bar');
+      const empty = bar.querySelector('.empty');
+      if (empty) empty.remove();
+
+      const card = document.createElement('div');
+      card.className = 'session-card';
+      card.dataset.sessionId = sessionId;
+      card.innerHTML = `
+        <div class="session-preview" id="preview-${sessionId}">
+          <div class="live-dot"></div>
+        </div>
+        <div class="session-info">
+          <div class="session-id">${shortId}</div>
+          <div class="session-status">NOW</div>
+        </div>
+      `;
+
+      bar.appendChild(card);
+
+      // Create mini replayer for preview
+      const previewEl = document.getElementById(`preview-${sessionId}`);
+      const sessionData = sessions.get(sessionId);
+      sessionData.replayer = new rrweb.Replayer([], {
+        liveMode: true,
+        root: previewEl,
+        speed: 1,
+        showDebug: false,
+        skipInactive: true,
+        UNSAFE_replayCanvas: true,
+        mouseTail: false,
+        insertStyleRules: [
+          '.replayer-mouse { display: none !important; }',
+          '.replayer-mouse-tail { display: none !important; }'
+        ]
+      });
+      sessionData.replayer.startLive(Date.now() - 300);
+
+      // Click to expand
+      card.onclick = () => {
+        const wasExpanded = card.classList.contains('expanded');
+
+        // Collapse all cards
+        document.querySelectorAll('.session-card').forEach(c => {
+          c.classList.remove('expanded');
+        });
+
+        // Expand this card if it wasn't already expanded
+        if (!wasExpanded) {
+          card.classList.add('expanded');
+
+          // Recreate replayer with better settings for expanded view
+          setTimeout(() => {
+            const previewEl = document.getElementById(`preview-${sessionId}`);
+            const sessionData = sessions.get(sessionId);
+
+            if (sessionData.replayer) {
+              sessionData.replayer.pause();
+            }
+
+            // Clear the preview element
+            previewEl.innerHTML = '<div class="live-dot"></div>';
+
+            // Create new replayer for expanded view
+            sessionData.replayer = new rrweb.Replayer(sessionData.events, {
+              liveMode: true,
+              root: previewEl,
+              speed: 1,
+              showDebug: false,
+              skipInactive: true,
+              UNSAFE_replayCanvas: true,
+              mouseTail: false,
+              insertStyleRules: [
+                '.replayer-mouse { display: none !important; }',
+                '.replayer-mouse-tail { display: none !important; }'
+              ]
+            });
+            sessionData.replayer.startLive(Date.now() - 300);
+          }, 100);
+        } else {
+          // Recreate replayer for normal view
+          setTimeout(() => {
+            const previewEl = document.getElementById(`preview-${sessionId}`);
+            const sessionData = sessions.get(sessionId);
+
+            if (sessionData.replayer) {
+              sessionData.replayer.pause();
+            }
+
+            // Clear the preview element
+            previewEl.innerHTML = '<div class="live-dot"></div>';
+
+            // Create new replayer for normal view
+            sessionData.replayer = new rrweb.Replayer(sessionData.events, {
+              liveMode: true,
+              root: previewEl,
+              speed: 1,
+              showDebug: false,
+              skipInactive: true,
+              UNSAFE_replayCanvas: true,
+              mouseTail: false,
+              insertStyleRules: [
+                '.replayer-mouse { display: none !important; }',
+                '.replayer-mouse-tail { display: none !important; }'
+              ]
+            });
+            sessionData.replayer.startLive(Date.now() - 300);
+          }, 100);
+        }
+      };
+    }
+
+
+    function updateCount() {
+      document.getElementById('count').textContent = `${sessions.size} ACTIVE`;
+    }
+
+    setInterval(() => {
+      const now = Date.now();
+      sessions.forEach((data, id) => {
+        const card = document.querySelector(`[data-session-id="${id}"]`);
+        if (card) {
+          const elapsed = Math.floor((now - data.lastActivity) / 1000);
+          const status = card.querySelector('.session-status');
+          if (elapsed < 5) {
+            status.textContent = 'NOW';
+          } else if (elapsed < 60) {
+            status.textContent = `${elapsed}S`;
+          } else {
+            status.textContent = `${Math.floor(elapsed / 60)}M`;
+          }
+        }
+      });
+    }, 1000);
+  </script>
+</body>
+</html>

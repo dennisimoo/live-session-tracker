@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, sans-serif;
+      background: #fafafa;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 20px;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 60px;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    nav a {
+      color: #666;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+
+    nav a:hover {
+      color: #000;
+    }
+
+    .hero {
+      max-width: 800px;
+      margin: 120px auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #000;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #333;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #000;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      border-color: #d1d5db;
+    }
+
+    .features {
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .feature h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+  </style>
+
+  <script src="/src/tracker.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="nav-content">
+      <div class="logo">Demo</div>
+      <a href="/">Home</a>
+      <a href="/demo.html">Contact</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/dashboard.html" style="margin-left: auto; color: #0070f3;">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Live Session Tracking</h1>
+    <p class="subtitle">See exactly what your users do in real-time. No setup required.</p>
+    <div class="cta-group">
+      <a href="/demo.html" class="btn btn-primary">Get Started</a>
+      <a href="/pricing.html" class="btn btn-secondary">View Pricing</a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Real-time Replay</h3>
+      <p>Watch user sessions as they happen with zero latency.</p>
+    </div>
+    <div class="feature">
+      <h3>Simple Integration</h3>
+      <p>One script tag and you're done. Works with any framework.</p>
+    </div>
+    <div class="feature">
+      <h3>Privacy First</h3>
+      <p>Self-hosted solution. Your data stays on your servers.</p>
+    </div>
+  </div>
+</body>
+</html>
