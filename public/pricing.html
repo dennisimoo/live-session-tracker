@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing</title>
+  <title>PRICING</title>
   <style>
+    @font-face {
+      font-family: 'Geist Pixel';
+      src: url('https://cdn.jsdelivr.net/npm/geist@1.5.1/dist/fonts/geist-pixel/GeistPixelSquare-Regular.woff2') format('woff2');
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -12,15 +17,18 @@
     }
 
     body {
-      font-family: -apple-system, sans-serif;
-      background: #fafafa;
+      font-family: 'Geist Pixel', monospace;
+      background: #000;
+      color: #fff;
       min-height: 100vh;
+      image-rendering: pixelated;
+      text-transform: uppercase;
     }
 
     nav {
-      background: #fff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 0 20px;
+      background: #000;
+      border-bottom: 2px solid #1a1a1a;
+      padding: 0 32px;
     }
 
     .nav-content {
@@ -29,35 +37,39 @@
       display: flex;
       align-items: center;
       gap: 40px;
-      height: 60px;
+      height: 56px;
     }
 
     .logo {
-      font-weight: 600;
-      font-size: 18px;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #fff;
     }
 
     nav a {
       color: #666;
       text-decoration: none;
-      font-size: 14px;
-      transition: color 0.15s;
+      font-size: 11px;
+      letter-spacing: 2px;
+      transition: color 0.2s;
     }
 
     nav a:hover {
-      color: #000;
+      color: #fff;
     }
 
     .container {
       max-width: 1000px;
-      margin: 80px auto;
-      padding: 0 20px;
+      margin: 100px auto;
+      padding: 0 32px;
     }
 
     h1 {
-      font-size: 36px;
+      font-size: 32px;
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 64px;
+      letter-spacing: 4px;
+      font-weight: 400;
     }
 
     .pricing-grid {
@@ -67,94 +79,100 @@
     }
 
     .plan {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
       padding: 32px;
-      transition: all 0.15s;
+      transition: all 0.2s;
     }
 
     .plan:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+      border-color: #333;
     }
 
     .plan.featured {
-      border-color: #0070f3;
-      box-shadow: 0 0 0 1px #0070f3;
+      border-color: #0f0;
     }
 
     .plan-name {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      letter-spacing: 3px;
+      color: #fff;
     }
 
     .plan-price {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
     }
 
     .plan-price span {
-      font-size: 14px;
+      font-size: 11px;
       color: #666;
       font-weight: 400;
     }
 
     .plan-description {
-      font-size: 13px;
+      font-size: 10px;
       color: #666;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
     }
 
     .plan-features {
       list-style: none;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .plan-features li {
-      font-size: 13px;
+      font-size: 10px;
       margin-bottom: 12px;
-      padding-left: 20px;
+      padding-left: 16px;
       position: relative;
+      letter-spacing: 1px;
+      color: #999;
     }
 
     .plan-features li:before {
-      content: "✓";
+      content: ">";
       position: absolute;
       left: 0;
-      color: #0070f3;
+      color: #0f0;
     }
 
     .btn {
       width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: 14px;
+      border: 2px solid #333;
+      font-size: 11px;
+      letter-spacing: 2px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s;
+      font-family: 'Geist Pixel', monospace;
+      text-transform: uppercase;
     }
 
     .btn-primary {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .btn-primary:hover {
       background: #000;
       color: #fff;
     }
 
-    .btn-primary:hover {
-      background: #333;
-    }
-
     .btn-secondary {
-      background: #fff;
-      color: #000;
-      border: 1px solid #e5e7eb;
+      background: #000;
+      color: #fff;
+      border-color: #333;
     }
 
     .btn-secondary:hover {
-      border-color: #d1d5db;
+      border-color: #666;
     }
   </style>
 
@@ -163,57 +181,57 @@
 <body>
   <nav>
     <div class="nav-content">
-      <div class="logo">Demo</div>
-      <a href="/">Home</a>
-      <a href="/demo.html">Contact</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/dashboard.html" style="margin-left: auto; color: #0070f3;">Dashboard</a>
+      <div class="logo">DEMO</div>
+      <a href="/">HOME</a>
+      <a href="/demo.html">CONTACT</a>
+      <a href="/pricing.html">PRICING</a>
+      <a href="/dashboard.html" style="margin-left: auto; color: #0f0;">DASHBOARD</a>
     </div>
   </nav>
 
   <div class="container">
-    <h1>Simple, Transparent Pricing</h1>
+    <h1>PRICING</h1>
 
     <div class="pricing-grid">
       <div class="plan">
-        <div class="plan-name">Starter</div>
-        <div class="plan-price">$29<span>/mo</span></div>
-        <div class="plan-description">Perfect for small projects</div>
+        <div class="plan-name">STARTER</div>
+        <div class="plan-price">$29<span>/MO</span></div>
+        <div class="plan-description">PERFECT FOR SMALL PROJECTS</div>
         <ul class="plan-features">
-          <li>1,000 sessions/month</li>
-          <li>30 day retention</li>
-          <li>Email support</li>
-          <li>Basic analytics</li>
+          <li>1,000 SESSIONS/MONTH</li>
+          <li>30 DAY RETENTION</li>
+          <li>EMAIL SUPPORT</li>
+          <li>BASIC ANALYTICS</li>
         </ul>
-        <button class="btn btn-secondary">Get Started</button>
+        <button class="btn btn-secondary">GET STARTED</button>
       </div>
 
       <div class="plan featured">
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">$99<span>/mo</span></div>
-        <div class="plan-description">For growing teams</div>
+        <div class="plan-name">PRO</div>
+        <div class="plan-price">$99<span>/MO</span></div>
+        <div class="plan-description">FOR GROWING TEAMS</div>
         <ul class="plan-features">
-          <li>10,000 sessions/month</li>
-          <li>90 day retention</li>
-          <li>Priority support</li>
-          <li>Advanced analytics</li>
-          <li>Custom integrations</li>
+          <li>10,000 SESSIONS/MONTH</li>
+          <li>90 DAY RETENTION</li>
+          <li>PRIORITY SUPPORT</li>
+          <li>ADVANCED ANALYTICS</li>
+          <li>CUSTOM INTEGRATIONS</li>
         </ul>
-        <button class="btn btn-primary">Get Started</button>
+        <button class="btn btn-primary">GET STARTED</button>
       </div>
 
       <div class="plan">
-        <div class="plan-name">Enterprise</div>
-        <div class="plan-price">Custom</div>
-        <div class="plan-description">For large organizations</div>
+        <div class="plan-name">ENTERPRISE</div>
+        <div class="plan-price">CUSTOM</div>
+        <div class="plan-description">FOR LARGE ORGANIZATIONS</div>
         <ul class="plan-features">
-          <li>Unlimited sessions</li>
-          <li>Custom retention</li>
-          <li>Dedicated support</li>
-          <li>Custom deployment</li>
-          <li>SLA guarantee</li>
+          <li>UNLIMITED SESSIONS</li>
+          <li>CUSTOM RETENTION</li>
+          <li>DEDICATED SUPPORT</li>
+          <li>CUSTOM DEPLOYMENT</li>
+          <li>SLA GUARANTEE</li>
         </ul>
-        <button class="btn btn-secondary">Contact Sales</button>
+        <button class="btn btn-secondary">CONTACT SALES</button>
       </div>
     </div>
   </div>

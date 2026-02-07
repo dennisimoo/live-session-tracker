@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo Site</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>DEMO SITE</title>
   <style>
-    :root {
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-      --font-mono: 'Geist Mono', monospace;
-      --radius: 12px;
+    @font-face {
+      font-family: 'Geist Pixel';
+      src: url('https://cdn.jsdelivr.net/npm/geist@1.5.1/dist/fonts/geist-pixel/GeistPixelSquare-Regular.woff2') format('woff2');
     }
 
     * {
@@ -21,67 +17,97 @@
     }
 
     body {
-      font-family: var(--font-sans);
-      background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+      font-family: 'Geist Pixel', monospace;
+      background: #000;
+      color: #fff;
       min-height: 100vh;
       padding: 60px 20px;
-      -webkit-font-smoothing: antialiased;
+      image-rendering: pixelated;
+      text-transform: uppercase;
+    }
+
+    nav {
+      background: #000;
+      border-bottom: 2px solid #1a1a1a;
+      padding: 0 32px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 56px;
+    }
+
+    .logo {
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+
+    nav a {
+      color: #666;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #fff;
     }
 
     .container {
       max-width: 540px;
-      margin: 0 auto;
+      margin: 80px auto 0;
     }
 
     .tracking-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      padding: 8px 14px;
-      border-radius: var(--radius);
-      font-size: 12px;
-      font-family: var(--font-mono);
-      color: #374151;
+      gap: 10px;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
+      padding: 10px 16px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #999;
       margin-bottom: 32px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     .tracking-dot {
-      width: 7px;
-      height: 7px;
-      background: #ef4444;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      width: 8px;
+      height: 8px;
+      background: #0f0;
     }
 
     .card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: var(--radius);
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
       padding: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: #111;
-      margin-bottom: 6px;
-      letter-spacing: -0.02em;
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
     }
 
     .subtitle {
-      color: #6b7280;
+      color: #666;
       margin-bottom: 32px;
-      font-size: 14px;
+      font-size: 11px;
       line-height: 1.6;
+      letter-spacing: 1px;
     }
 
     .form-group {
@@ -91,51 +117,51 @@
     label {
       display: block;
       margin-bottom: 8px;
-      color: #374151;
-      font-weight: 500;
-      font-size: 13px;
+      color: #999;
+      font-size: 10px;
+      letter-spacing: 2px;
     }
 
     input, textarea, select {
       width: 100%;
-      padding: 10px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: var(--font-sans);
-      transition: all 0.15s ease;
-      background: #fff;
-      color: #111;
+      padding: 12px;
+      border: 2px solid #1a1a1a;
+      font-size: 11px;
+      font-family: 'Geist Pixel', monospace;
+      transition: all 0.2s;
+      background: #000;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     input:focus, textarea:focus, select:focus {
       outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #333;
     }
 
     textarea {
       resize: vertical;
       min-height: 90px;
-      font-family: var(--font-sans);
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background: #111;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: 14px;
+      background: #fff;
+      color: #000;
+      border: 2px solid #fff;
+      font-size: 11px;
+      letter-spacing: 2px;
       cursor: pointer;
-      transition: all 0.15s ease;
-      font-family: var(--font-sans);
+      transition: all 0.2s;
+      font-family: 'Geist Pixel', monospace;
+      text-transform: uppercase;
     }
 
     button:hover {
       background: #000;
+      color: #fff;
     }
 
     button:active {
@@ -150,141 +176,112 @@
     }
 
     .grid-item {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      background: #000;
+      border: 2px solid #1a1a1a;
       padding: 20px;
-      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s;
     }
 
     .grid-item:hover {
-      background: #f3f4f6;
-      border-color: #d1d5db;
-      transform: translateY(-2px);
+      border-color: #333;
     }
 
     .grid-item h3 {
-      font-size: 14px;
-      color: #111;
-      margin-bottom: 4px;
-      font-weight: 500;
+      font-size: 11px;
+      color: #fff;
+      margin-bottom: 6px;
+      font-weight: 400;
+      letter-spacing: 2px;
     }
 
     .grid-item p {
-      font-size: 12px;
-      color: #6b7280;
+      font-size: 9px;
+      color: #666;
+      letter-spacing: 1px;
     }
 
     ::placeholder {
-      color: #9ca3af;
+      color: #333;
+    }
+
+    option {
+      background: #000;
+      color: #fff;
     }
   </style>
 
   <script src="/src/tracker.js"></script>
-  <style>
-    nav {
-      background: #fff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 0 20px;
-      margin-bottom: 40px;
-    }
-
-    .nav-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      height: 60px;
-    }
-
-    .logo {
-      font-weight: 600;
-      font-size: 18px;
-    }
-
-    nav a {
-      color: #666;
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.15s;
-    }
-
-    nav a:hover {
-      color: #000;
-    }
-  </style>
 </head>
 <body>
   <nav>
     <div class="nav-content">
-      <div class="logo">Demo</div>
-      <a href="/">Home</a>
-      <a href="/demo.html">Contact</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/dashboard.html" style="margin-left: auto; color: #0070f3;">Dashboard</a>
+      <div class="logo">DEMO</div>
+      <a href="/">HOME</a>
+      <a href="/demo.html">CONTACT</a>
+      <a href="/pricing.html">PRICING</a>
+      <a href="/dashboard.html" style="margin-left: auto; color: #0f0;">DASHBOARD</a>
     </div>
   </nav>
 
   <div class="container">
     <div class="tracking-badge">
       <div class="tracking-dot"></div>
-      Live tracking active
+      LIVE TRACKING ACTIVE
     </div>
 
     <div class="card">
-      <h1>Contact Form</h1>
-      <p class="subtitle">Fill out this form and watch it appear live on the dashboard</p>
+      <h1>CONTACT FORM</h1>
+      <p class="subtitle">FILL OUT THIS FORM AND WATCH IT APPEAR LIVE ON THE DASHBOARD</p>
 
       <form id="demo-form">
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="John Doe">
+          <label for="name">NAME</label>
+          <input type="text" id="name" placeholder="JOHN DOE">
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="john@example.com">
+          <label for="email">EMAIL</label>
+          <input type="email" id="email" placeholder="JOHN@EXAMPLE.COM">
         </div>
 
         <div class="form-group">
-          <label for="country">Country</label>
+          <label for="country">COUNTRY</label>
           <select id="country">
-            <option value="">Select a country</option>
-            <option value="us">United States</option>
-            <option value="uk">United Kingdom</option>
-            <option value="ca">Canada</option>
-            <option value="au">Australia</option>
-            <option value="de">Germany</option>
-            <option value="fr">France</option>
+            <option value="">SELECT A COUNTRY</option>
+            <option value="us">UNITED STATES</option>
+            <option value="uk">UNITED KINGDOM</option>
+            <option value="ca">CANADA</option>
+            <option value="au">AUSTRALIA</option>
+            <option value="de">GERMANY</option>
+            <option value="fr">FRANCE</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" placeholder="Tell us what you think..."></textarea>
+          <label for="message">MESSAGE</label>
+          <textarea id="message" placeholder="TELL US WHAT YOU THINK..."></textarea>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit">SUBMIT</button>
       </form>
 
       <div class="grid">
         <div class="grid-item">
-          <h3>Pricing</h3>
-          <p>View plans</p>
+          <h3>PRICING</h3>
+          <p>VIEW PLANS</p>
         </div>
         <div class="grid-item">
-          <h3>Documentation</h3>
-          <p>Read guides</p>
+          <h3>DOCUMENTATION</h3>
+          <p>READ GUIDES</p>
         </div>
         <div class="grid-item">
-          <h3>Support</h3>
-          <p>Get help</p>
+          <h3>SUPPORT</h3>
+          <p>GET HELP</p>
         </div>
         <div class="grid-item">
-          <h3>API Reference</h3>
-          <p>View docs</p>
+          <h3>API REFERENCE</h3>
+          <p>VIEW DOCS</p>
         </div>
       </div>
     </div>

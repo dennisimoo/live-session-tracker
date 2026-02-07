@@ -17,15 +17,22 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/src', express.static(path.join(__dirname, '../src')));
 
 const sessions = new Map();
+const activeSessions = new Set();
 
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
 
   socket.on('join-session', (sessionId) => {
     socket.join(sessionId);
+    socket.sessionId = sessionId;
+
     if (!sessions.has(sessionId)) {
       sessions.set(sessionId, []);
     }
+
+    // Mark session as active
+    activeSessions.add(sessionId);
+
     console.log(`Session ${sessionId} joined`);
 
     // Notify dashboard that a new session joined
@@ -34,7 +41,7 @@ io.on('connection', (socket) => {
 
   socket.on('user-action', (data) => {
     const { sessionId, event } = data;
-    console.log('User action received:', sessionId);
+    console.log('User action received:', sessionId, 'Event type:', event.type);
 
     // Broadcast to ALL dashboard viewers
     io.to('dashboard').emit('live-event', {
@@ -45,7 +52,12 @@ io.on('connection', (socket) => {
     // Store event
     if (sessions.has(sessionId)) {
       sessions.get(sessionId).push(event);
+    } else {
+      sessions.set(sessionId, [event]);
     }
+
+    // Mark session as active
+    activeSessions.add(sessionId);
   });
 
   socket.on('watch-sessions', () => {
@@ -53,12 +65,22 @@ io.on('connection', (socket) => {
     console.log('Dashboard viewer connected');
 
     // Send all active sessions to new dashboard viewer
-    const activeSessions = Array.from(sessions.keys());
-    socket.emit('active-sessions', { sessions: activeSessions });
+    const activeSessionsList = Array.from(activeSessions);
+    socket.emit('active-sessions', { sessions: activeSessionsList });
   });
 
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
+
+    // If this was a session client, remove from active sessions
+    if (socket.sessionId && activeSessions.has(socket.sessionId)) {
+      // Check if any other socket is still in this session room
+      const room = io.sockets.adapter.rooms.get(socket.sessionId);
+      if (!room || room.size === 0) {
+        console.log(`Session ${socket.sessionId} ended`);
+        activeSessions.delete(socket.sessionId);
+      }
+    }
   });
 });
 

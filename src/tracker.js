@@ -46,7 +46,7 @@
           },
           sampling: {
             scroll: 150,
-            input: false  // Record all input events
+            input: 'all'  // Record all input events
           },
           recordCanvas: true,
           collectFonts: true,

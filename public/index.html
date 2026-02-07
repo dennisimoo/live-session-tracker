@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>HOME</title>
   <style>
+    @font-face {
+      font-family: 'Geist Pixel';
+      src: url('https://cdn.jsdelivr.net/npm/geist@1.5.1/dist/fonts/geist-pixel/GeistPixelSquare-Regular.woff2') format('woff2');
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -13,15 +17,18 @@
     }
 
     body {
-      font-family: -apple-system, sans-serif;
-      background: #fafafa;
+      font-family: 'Geist Pixel', monospace;
+      background: #000;
+      color: #fff;
       min-height: 100vh;
+      image-rendering: pixelated;
+      text-transform: uppercase;
     }
 
     nav {
-      background: #fff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 0 20px;
+      background: #000;
+      border-bottom: 2px solid #1a1a1a;
+      padding: 0 32px;
     }
 
     .nav-content {
@@ -30,105 +37,120 @@
       display: flex;
       align-items: center;
       gap: 40px;
-      height: 60px;
+      height: 56px;
     }
 
     .logo {
-      font-weight: 600;
-      font-size: 18px;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #fff;
     }
 
     nav a {
       color: #666;
       text-decoration: none;
-      font-size: 14px;
-      transition: color 0.15s;
+      font-size: 11px;
+      letter-spacing: 2px;
+      transition: color 0.2s;
     }
 
     nav a:hover {
-      color: #000;
+      color: #fff;
     }
 
     .hero {
       max-width: 800px;
-      margin: 120px auto;
+      margin: 140px auto;
       text-align: center;
-      padding: 0 20px;
+      padding: 0 32px;
     }
 
     h1 {
       font-size: 48px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin-bottom: 24px;
+      letter-spacing: 6px;
+      line-height: 1.2;
     }
 
     .subtitle {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 40px;
+      font-size: 14px;
+      color: #999;
+      margin-bottom: 48px;
+      letter-spacing: 2px;
     }
 
     .cta-group {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       justify-content: center;
     }
 
     .btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: 14px 32px;
+      font-size: 11px;
+      letter-spacing: 2px;
       text-decoration: none;
-      transition: all 0.15s;
+      transition: all 0.2s;
       cursor: pointer;
+      font-family: 'Geist Pixel', monospace;
+      text-transform: uppercase;
     }
 
     .btn-primary {
+      background: #fff;
+      color: #000;
+      border: 2px solid #fff;
+    }
+
+    .btn-primary:hover {
       background: #000;
       color: #fff;
     }
 
-    .btn-primary:hover {
-      background: #333;
-    }
-
     .btn-secondary {
-      background: #fff;
-      color: #000;
-      border: 1px solid #e5e7eb;
+      background: #000;
+      color: #fff;
+      border: 2px solid #333;
     }
 
     .btn-secondary:hover {
-      border-color: #d1d5db;
+      border-color: #666;
     }
 
     .features {
       max-width: 1000px;
-      margin: 80px auto;
-      padding: 0 20px;
+      margin: 120px auto;
+      padding: 0 32px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
     .feature {
-      background: #fff;
-      padding: 24px;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
+      background: #0a0a0a;
+      padding: 32px;
+      border: 2px solid #1a1a1a;
+      transition: border-color 0.2s;
+    }
+
+    .feature:hover {
+      border-color: #333;
     }
 
     .feature h3 {
-      font-size: 16px;
-      margin-bottom: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      color: #fff;
+      font-weight: 400;
     }
 
     .feature p {
-      font-size: 13px;
+      font-size: 11px;
       color: #666;
       line-height: 1.6;
+      letter-spacing: 1px;
     }
   </style>
 
@@ -137,35 +159,35 @@
 <body>
   <nav>
     <div class="nav-content">
-      <div class="logo">Demo</div>
-      <a href="/">Home</a>
-      <a href="/demo.html">Contact</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/dashboard.html" style="margin-left: auto; color: #0070f3;">Dashboard</a>
+      <div class="logo">DEMO</div>
+      <a href="/">HOME</a>
+      <a href="/demo.html">CONTACT</a>
+      <a href="/pricing.html">PRICING</a>
+      <a href="/dashboard.html" style="margin-left: auto; color: #0f0;">DASHBOARD</a>
     </div>
   </nav>
 
   <div class="hero">
-    <h1>Live Session Tracking</h1>
-    <p class="subtitle">See exactly what your users do in real-time. No setup required.</p>
+    <h1>LIVE SESSION<br>TRACKING</h1>
+    <p class="subtitle">SEE EXACTLY WHAT YOUR USERS DO IN REAL-TIME</p>
     <div class="cta-group">
-      <a href="/demo.html" class="btn btn-primary">Get Started</a>
-      <a href="/pricing.html" class="btn btn-secondary">View Pricing</a>
+      <a href="/demo.html" class="btn btn-primary">GET STARTED</a>
+      <a href="/pricing.html" class="btn btn-secondary">VIEW PRICING</a>
     </div>
   </div>
 
   <div class="features">
     <div class="feature">
-      <h3>Real-time Replay</h3>
-      <p>Watch user sessions as they happen with zero latency.</p>
+      <h3>REAL-TIME REPLAY</h3>
+      <p>WATCH USER SESSIONS AS THEY HAPPEN WITH ZERO LATENCY</p>
     </div>
     <div class="feature">
-      <h3>Simple Integration</h3>
-      <p>One script tag and you're done. Works with any framework.</p>
+      <h3>SIMPLE INTEGRATION</h3>
+      <p>ONE SCRIPT TAG AND YOU'RE DONE. WORKS WITH ANY FRAMEWORK</p>
     </div>
     <div class="feature">
-      <h3>Privacy First</h3>
-      <p>Self-hosted solution. Your data stays on your servers.</p>
+      <h3>PRIVACY FIRST</h3>
+      <p>SELF-HOSTED SOLUTION. YOUR DATA STAYS ON YOUR SERVERS</p>
     </div>
   </div>
 </body>

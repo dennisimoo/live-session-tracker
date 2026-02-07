@@ -2,7 +2,12 @@
 const SOCKET_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3001'
   : window.location.origin;
-const socket = io(SOCKET_URL);
+const socket = io(SOCKET_URL, {
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 5000,
+  reconnectionAttempts: Infinity
+});
 const sessions = new Map();
 let currentReplayer = null;
 let currentSession = null;
@@ -15,12 +20,24 @@ if (installCodeEl) {
 }
 
 socket.on('connect', () => {
+  console.log('Dashboard connected to server');
+  socket.emit('watch-sessions');
+});
+
+socket.on('disconnect', () => {
+  console.log('Dashboard disconnected from server');
+});
+
+socket.on('reconnect', (attemptNumber) => {
+  console.log('Dashboard reconnected after', attemptNumber, 'attempts');
+  // Re-request active sessions after reconnection
   socket.emit('watch-sessions');
 });
 
 // Receive list of active sessions when dashboard connects
 socket.on('active-sessions', (data) => {
   const { sessions: activeSessions } = data;
+  console.log('Received active sessions:', activeSessions);
   activeSessions.forEach(sessionId => {
     if (!sessions.has(sessionId)) {
       addSession(sessionId);
