@@ -234,7 +234,7 @@
       <div class="empty">
         <div class="empty-title">WAITING</div>
         <div class="empty-subtitle">OPEN DEMO SITE TO START</div>
-        <div class="code">&lt;script src="http://localhost:3001/src/tracker.js"&gt;&lt;/script&gt;</div>
+        <div class="code" id="install-code"></div>
       </div>
     </div>
   </div>
@@ -242,10 +242,21 @@
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/rrweb@latest/dist/rrweb-all.min.js"></script>
   <script>
-    const socket = io('http://localhost:3001');
+    // Auto-detect server URL
+    const SOCKET_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:3001'
+      : window.location.origin;
+    const socket = io(SOCKET_URL);
     const sessions = new Map();
     let currentReplayer = null;
     let currentSession = null;
+
+    // Update install code with correct URL
+    const installCodeEl = document.getElementById('install-code');
+    if (installCodeEl) {
+      const trackerUrl = SOCKET_URL + '/src/tracker.js';
+      installCodeEl.textContent = `<script src="${trackerUrl}"></script>`;
+    }
 
     socket.on('connect', () => {
       socket.emit('watch-sessions');

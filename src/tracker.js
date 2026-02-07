@@ -1,6 +1,9 @@
 // Live Session Tracker
 (function() {
-  const SOCKET_URL = 'http://localhost:3001';
+  // Auto-detect server URL: localhost for dev, current origin for production
+  const SOCKET_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:3001'
+    : window.location.origin;
 
   // Load scripts
   function loadScript(src) {
