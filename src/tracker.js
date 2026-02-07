@@ -46,8 +46,14 @@
           },
           sampling: {
             scroll: 150,
-            input: 'last'
-          }
+            input: false  // Record all input events
+          },
+          recordCanvas: true,
+          collectFonts: true,
+          maskAllInputs: false,  // Show input text
+          maskInputOptions: {},
+          slimDOMOptions: {},
+          inlineStylesheet: true
         });
       });
     } catch (err) {
