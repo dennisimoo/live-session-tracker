@@ -27,6 +27,9 @@ io.on('connection', (socket) => {
       sessions.set(sessionId, []);
     }
     console.log(`Session ${sessionId} joined`);
+
+    // Notify dashboard that a new session joined
+    io.to('dashboard').emit('session-joined', { sessionId });
   });
 
   socket.on('user-action', (data) => {
@@ -48,6 +51,10 @@ io.on('connection', (socket) => {
   socket.on('watch-sessions', () => {
     socket.join('dashboard');
     console.log('Dashboard viewer connected');
+
+    // Send all active sessions to new dashboard viewer
+    const activeSessions = Array.from(sessions.keys());
+    socket.emit('active-sessions', { sessions: activeSessions });
   });
 
   socket.on('disconnect', () => {

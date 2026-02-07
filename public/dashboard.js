@@ -18,6 +18,24 @@ socket.on('connect', () => {
   socket.emit('watch-sessions');
 });
 
+// Receive list of active sessions when dashboard connects
+socket.on('active-sessions', (data) => {
+  const { sessions: activeSessions } = data;
+  activeSessions.forEach(sessionId => {
+    if (!sessions.has(sessionId)) {
+      addSession(sessionId);
+    }
+  });
+});
+
+// New session joined
+socket.on('session-joined', (data) => {
+  const { sessionId } = data;
+  if (!sessions.has(sessionId)) {
+    addSession(sessionId);
+  }
+});
+
 socket.on('live-event', (data) => {
   const { sessionId, event } = data;
 
