@@ -11,6 +11,8 @@ const socket = io(SOCKET_URL, {
 const sessions = new Map();
 let currentReplayer = null;
 let currentSession = null;
+let totalEvents = 0;
+let totalSessionsCount = 0;
 
 // Update install code with correct URL
 const installCodeEl = document.getElementById('install-code');
@@ -63,6 +65,7 @@ socket.on('live-event', (data) => {
   const sessionData = sessions.get(sessionId);
   sessionData.events.push(event);
   sessionData.lastActivity = Date.now();
+  totalEvents++;
 
   // Update preview replayer
   if (sessionData.replayer) {
@@ -74,6 +77,10 @@ socket.on('live-event', (data) => {
 
 function addSession(sessionId) {
   const shortId = sessionId.replace('session_', '').substring(0, 8).toUpperCase();
+
+  if (!sessions.has(sessionId)) {
+    totalSessionsCount++;
+  }
 
   sessions.set(sessionId, {
     id: sessionId,
@@ -197,7 +204,10 @@ function addSession(sessionId) {
 
 
 function updateCount() {
-  document.getElementById('count').textContent = `${sessions.size} ACTIVE`;
+  const activeCount = sessions.size;
+  document.getElementById('active-count').textContent = activeCount;
+  document.getElementById('total-sessions').textContent = totalSessionsCount;
+  document.getElementById('total-events').textContent = totalEvents.toLocaleString();
 }
 
 setInterval(() => {
